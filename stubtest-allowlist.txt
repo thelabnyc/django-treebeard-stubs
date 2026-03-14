@@ -1,0 +1,22 @@
+# Django model fields are DeferredAttribute descriptors at runtime,
+# but stubs correctly type them as field types for type checking purposes.
+treebeard.mp_tree.MP_Node.path
+treebeard.mp_tree.MP_Node.depth
+treebeard.mp_tree.MP_Node.numchild
+treebeard.ns_tree.NS_Node.lft
+treebeard.ns_tree.NS_Node.rgt
+treebeard.ns_tree.NS_Node.tree_id
+treebeard.ns_tree.NS_Node.depth
+treebeard.ltree.LT_Node.path
+
+# Django managers are ManagerDescriptor at runtime,
+# but stubs correctly type them as manager instances for type checking.
+treebeard.mp_tree.MP_Node.objects
+treebeard.ns_tree.NS_Node.objects
+treebeard.al_tree.AL_Node.objects
+treebeard.ltree.LT_Node.objects
+
+# PathField.formfield has a different signature than the parent class in
+# django-stubs. The runtime uses **kwargs which is compatible.
+treebeard.ltree.PathField.formfield
+treebeard.ltree.fields.PathField.formfield

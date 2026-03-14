@@ -1,0 +1,184 @@
+- case: mp_node_subclass
+  mypy_config: |
+    [mypy]
+    plugins = mypy_django_plugin.main
+
+    [mypy.plugins.django-stubs]
+    django_settings_module = tests.mypy_test_settings
+  main: |
+    from treebeard.mp_tree import MP_Node
+    from django.db import models
+
+    class Category(MP_Node):
+        name = models.CharField(max_length=100)
+
+        class Meta:
+            app_label = "test"
+
+    # add_root returns Self
+    root: Category = Category.add_root(name="root")
+    reveal_type(root)  # N: Revealed type is "main.Category"
+
+    # add_child returns Self
+    child: Category = root.add_child(name="child")
+    reveal_type(child)  # N: Revealed type is "main.Category"
+
+- case: mp_node_get_tree
+  mypy_config: |
+    [mypy]
+    plugins = mypy_django_plugin.main
+
+    [mypy.plugins.django-stubs]
+    django_settings_module = tests.mypy_test_settings
+  main: |
+    from treebeard.mp_tree import MP_Node
+    from django.db import models
+
+    class Category(MP_Node):
+        name = models.CharField(max_length=100)
+
+        class Meta:
+            app_label = "test"
+
+    qs = Category.get_tree()
+    reveal_type(qs)  # N: Revealed type is "django.db.models.query.QuerySet[main.Category, main.Category]"
+
+    roots = Category.get_root_nodes()
+    reveal_type(roots)  # N: Revealed type is "django.db.models.query.QuerySet[main.Category, main.Category]"
+
+- case: mp_node_navigation
+  mypy_config: |
+    [mypy]
+    plugins = mypy_django_plugin.main
+
+    [mypy.plugins.django-stubs]
+    django_settings_module = tests.mypy_test_settings
+  main: |
+    from treebeard.mp_tree import MP_Node
+    from django.db import models
+
+    class Category(MP_Node):
+        name = models.CharField(max_length=100)
+
+        class Meta:
+            app_label = "test"
+
+    node = Category.add_root(name="root")
+
+    children = node.get_children()
+    reveal_type(children)  # N: Revealed type is "django.db.models.query.QuerySet[main.Category, main.Category]"
+
+    parent = node.get_parent()
+    reveal_type(parent)  # N: Revealed type is "main.Category | None"
+
+    is_leaf: bool = node.is_leaf()
+    is_root: bool = node.is_root()
+
+    depth: int = node.get_depth()
+
+- case: ns_node_subclass
+  mypy_config: |
+    [mypy]
+    plugins = mypy_django_plugin.main
+
+    [mypy.plugins.django-stubs]
+    django_settings_module = tests.mypy_test_settings
+  main: |
+    from treebeard.ns_tree import NS_Node
+    from django.db import models
+
+    class Tag(NS_Node):
+        name = models.CharField(max_length=100)
+
+        class Meta:
+            app_label = "test"
+
+    root: Tag = Tag.add_root(name="root")
+    reveal_type(root)  # N: Revealed type is "main.Tag"
+
+    child: Tag = root.add_child(name="child")
+    reveal_type(child)  # N: Revealed type is "main.Tag"
+
+- case: move_node_form
+  mypy_config: |
+    [mypy]
+    plugins = mypy_django_plugin.main
+
+    [mypy.plugins.django-stubs]
+    django_settings_module = tests.mypy_test_settings
+  main: |
+    from treebeard.forms import MoveNodeForm, movenodeform_factory
+    from treebeard.mp_tree import MP_Node
+    from django.db import models
+
+    class Category(MP_Node):
+        name = models.CharField(max_length=100)
+
+        class Meta:
+            app_label = "test"
+
+    FormClass = movenodeform_factory(Category)
+    reveal_type(FormClass)  # N: Revealed type is "type[treebeard.forms.MoveNodeForm]"
+
+- case: tree_admin
+  mypy_config: |
+    [mypy]
+    plugins = mypy_django_plugin.main
+
+    [mypy.plugins.django-stubs]
+    django_settings_module = tests.mypy_test_settings
+  main: |
+    from django.contrib import admin
+    from treebeard.admin import TreeAdmin
+    from treebeard.forms import movenodeform_factory
+    from treebeard.mp_tree import MP_Node
+    from django.db import models
+
+    class Category(MP_Node):
+        name = models.CharField(max_length=100)
+
+        class Meta:
+            app_label = "test"
+
+    class CategoryAdmin(TreeAdmin):
+        form = movenodeform_factory(Category)
+
+- case: exceptions
+  mypy_config: |
+    [mypy]
+    plugins = mypy_django_plugin.main
+
+    [mypy.plugins.django-stubs]
+    django_settings_module = tests.mypy_test_settings
+  main: |
+    from treebeard.exceptions import (
+        InvalidMoveToDescendant,
+        InvalidPosition,
+        MissingNodeOrderBy,
+        NodeAlreadySaved,
+        PathOverflow,
+    )
+
+    # All exceptions are subclasses of Exception
+    e1: Exception = InvalidPosition("test")
+    e2: Exception = InvalidMoveToDescendant("test")
+    e3: Exception = NodeAlreadySaved("test")
+    e4: Exception = MissingNodeOrderBy("test")
+    e5: Exception = PathOverflow("test")
+
+- case: numconv
+  mypy_config: |
+    [mypy]
+    plugins = mypy_django_plugin.main
+
+    [mypy.plugins.django-stubs]
+    django_settings_module = tests.mypy_test_settings
+  main: |
+    from treebeard.numconv import NumConv, BASE85
+
+    conv = NumConv()
+    s: str = conv.int2str(42)
+    n: int = conv.str2int("hello")
+
+    custom = NumConv("0123456789ABCDEF")
+    hex_str: str = custom.int2str(255)

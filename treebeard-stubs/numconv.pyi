@@ -1,0 +1,9 @@
+BASE85: str
+
+class NumConv:
+    radix: int
+    alphabet: str
+    cached_map: dict[str, int]
+    def __init__(self, alphabet: str = ...) -> None: ...
+    def int2str(self, num: int) -> str: ...
+    def str2int(self, chars: str) -> int: ...

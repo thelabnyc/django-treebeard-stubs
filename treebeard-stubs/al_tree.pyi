@@ -4,15 +4,14 @@ from django.db import models
 from django.db.models import QuerySet
 from treebeard.models import Node
 
+def get_result_class(cls: type[AL_Node]) -> type[AL_Node]: ...
+
 class AL_NodeManager(models.Manager["AL_Node"]):
     def get_queryset(self) -> QuerySet[AL_Node]: ...
 
 class AL_Node(Node):
     objects: ClassVar[AL_NodeManager]  # type: ignore[assignment]
     node_order_by: list[str] | None
-
-    TREEBEARD_IDENTIFYING_FIELD: str
-    MOVENODE_FORM_EXCLUDED_FIELDS: tuple[str, ...]
 
     parent: models.ForeignKey[Self | None, Self | None]
     sib_order: models.PositiveIntegerField[int, int]

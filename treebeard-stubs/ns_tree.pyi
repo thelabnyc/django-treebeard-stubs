@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import QuerySet
 from treebeard.models import Node
 
+def get_result_class(cls: type[NS_Node]) -> type[NS_Node]: ...
 def merge_deleted_counters(
     c1: tuple[int, dict[str, int]], c2: tuple[int, dict[str, int]]
 ) -> tuple[int, dict[str, int]]: ...
@@ -27,9 +28,6 @@ class NS_Node(Node):
     tree_id: models.PositiveIntegerField[int, int]
     depth: models.PositiveIntegerField[int, int]
 
-    TREEBEARD_IDENTIFYING_FIELD: str
-    MOVENODE_FORM_EXCLUDED_FIELDS: tuple[str, ...]
-
     objects: ClassVar[NS_NodeManager]  # type: ignore[assignment]
 
     @classmethod
@@ -48,7 +46,7 @@ class NS_Node(Node):
     @classmethod
     def get_tree(cls, parent: Self | None = ...) -> QuerySet[Self]: ...
     def get_descendants(self, include_self: bool = ...) -> QuerySet[Self]: ...
-    def get_descendant_count(self) -> int: ...  # Runtime returns float but base class declares int; keeping int for LSP
+    def get_descendant_count(self) -> int: ...
     def get_ancestors(self) -> QuerySet[Self]: ...
     def is_descendant_of(self, node: Self) -> bool: ...
     def get_parent(self, update: bool = ...) -> Self | None: ...

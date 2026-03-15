@@ -180,5 +180,5 @@
     s: str = conv.int2str(42)
     n: int = conv.str2int("hello")
 
-    custom = NumConv("0123456789ABCDEF")
+    custom = NumConv(16, "0123456789ABCDEF")
     hex_str: str = custom.int2str(255)

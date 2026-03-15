@@ -2,7 +2,6 @@ from typing import Any, ClassVar, Self
 
 from django.db import models
 from django.db.models import QuerySet
-
 from treebeard.models import Node
 from treebeard.numconv import NumConv
 
@@ -110,4 +109,4 @@ class MP_Node(Node):
     def move(self, target: Self, pos: str | None = ...) -> None: ...
 
     class Meta:
-        abstract = True
+        abstract: bool

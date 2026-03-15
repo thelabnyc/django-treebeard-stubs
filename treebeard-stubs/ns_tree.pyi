@@ -2,7 +2,6 @@ from typing import Any, ClassVar, Self
 
 from django.db import models
 from django.db.models import QuerySet
-
 from treebeard.models import Node
 
 def merge_deleted_counters(
@@ -57,4 +56,4 @@ class NS_Node(Node):
     def get_root_nodes(cls) -> QuerySet[Self]: ...
 
     class Meta:
-        abstract = True
+        abstract: bool

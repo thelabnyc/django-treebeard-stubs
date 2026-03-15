@@ -2,7 +2,6 @@ from typing import Any, ClassVar, Self
 
 from django.db import models
 from django.db.models import QuerySet
-
 from treebeard.models import Node
 
 class AL_NodeManager(models.Manager["AL_Node"]):
@@ -42,4 +41,4 @@ class AL_Node(Node):
     def move(self, target: Self, pos: str | None = ...) -> None: ...
 
     class Meta:
-        abstract = True
+        abstract: bool

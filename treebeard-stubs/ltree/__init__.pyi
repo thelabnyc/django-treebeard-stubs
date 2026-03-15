@@ -1,10 +1,8 @@
-from typing import Any, ClassVar, Self
-
 from collections.abc import Iterable
+from typing import Any, ClassVar, Self
 
 from django.db import models
 from django.db.models import QuerySet
-
 from treebeard.ltree.fields import PathField as PathField
 from treebeard.ltree.fields import PathValue as PathValue
 from treebeard.models import Node
@@ -16,7 +14,6 @@ def generate_label(
     before: str | None = ...,
     after: str | None = ...,
 ) -> str: ...
-
 def generate_path(
     prefix: PathValue | None = ...,
     before: str | None = ...,
@@ -100,4 +97,4 @@ class LT_Node(Node):
     def move(self, target: Self, pos: str | None = ...) -> None: ...
 
     class Meta:
-        abstract = True
+        abstract: bool

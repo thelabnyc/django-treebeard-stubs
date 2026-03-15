@@ -1,6 +1,5 @@
-from typing import Any, Self
-
 from collections.abc import Iterable
+from typing import Any, Self
 
 from django.db import models
 from django.db.models import QuerySet
@@ -73,4 +72,4 @@ class Node(models.Model):
     def tree_model(cls) -> type[Self]: ...
 
     class Meta:
-        abstract = True
+        abstract: bool

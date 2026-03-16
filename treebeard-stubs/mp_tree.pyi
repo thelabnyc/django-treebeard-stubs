@@ -8,7 +8,7 @@ from treebeard.numconv import NumConv
 def sql_concat(*args: str, **kwargs: Any) -> str: ...
 def sql_length(field: str, vendor: str | None = ...) -> str: ...
 def sql_substr(field: str, pos: str, length: str | None = ..., **kwargs: Any) -> str: ...
-def get_result_class(cls: type["MP_Node"]) -> type["MP_Node"]: ...
+def get_result_class(cls: type[MP_Node]) -> type[MP_Node]: ...
 
 class MP_Node(Node):
     steplen: int
@@ -18,7 +18,7 @@ class MP_Node(Node):
     depth: models.PositiveIntegerField[int, int]
     numchild: models.PositiveIntegerField[int, int]
 
-    objects: ClassVar["MP_NodeManager"]  # type: ignore[assignment]
+    objects: ClassVar[MP_NodeManager]  # type: ignore[assignment]
 
     numconv_obj_: NumConv | None
 

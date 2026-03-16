@@ -1,3 +1,9 @@
+## v4.8.1 (2026-03-16)
+
+### Fix
+
+- make MP_NodeQuerySet generic
+
 ## v4.8.0 (2026-03-16)
 
 ### Feat

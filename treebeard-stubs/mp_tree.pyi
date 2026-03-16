@@ -1,16 +1,18 @@
-from typing import Any, ClassVar, Self
+from typing import Any, ClassVar, Self, TypeVar
 
 from django.db import models
 from django.db.models import QuerySet
 from treebeard.models import Node
 from treebeard.numconv import NumConv
 
+_T = TypeVar("_T", bound=MP_Node)
+
 def sql_concat(*args: str, **kwargs: Any) -> str: ...
 def sql_length(field: str, vendor: str | None = ...) -> str: ...
 def sql_substr(field: str, pos: str, length: str | None = ..., **kwargs: Any) -> str: ...
 def get_result_class(cls: type[MP_Node]) -> type[MP_Node]: ...
 
-class MP_NodeQuerySet(models.QuerySet["MP_Node"]):
+class MP_NodeQuerySet(models.QuerySet[_T]):
     def delete(self, *args: Any, **kwargs: Any) -> tuple[int, dict[str, int]]: ...
 
 class MP_NodeManager(models.Manager["MP_Node"]):

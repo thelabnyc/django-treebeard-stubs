@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django-treebeard-stubs"
-version = "4.8.1"
+version = "4.8.2"
 description = "PEP 561 type stubs for django-treebeard"
 readme = "README.md"
 license = { text = "ISC" }

@@ -1,3 +1,9 @@
+## v4.8.3 (2026-03-16)
+
+### Fix
+
+- remove unnecessary quotes from stub forward references
+
 ## v4.8.2 (2026-03-16)
 
 ### Fix

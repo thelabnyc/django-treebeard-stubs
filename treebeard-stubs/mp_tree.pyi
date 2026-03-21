@@ -18,7 +18,7 @@ class MP_Node(Node):
     depth: models.PositiveIntegerField[int, int]
     numchild: models.PositiveIntegerField[int, int]
 
-    objects: ClassVar[MP_NodeManager]  # type: ignore[assignment]
+    objects: ClassVar[MP_NodeManager[Self]]
 
     numconv_obj_: NumConv | None
 
@@ -65,8 +65,8 @@ _T = TypeVar("_T", bound=MP_Node)
 class MP_NodeQuerySet(models.QuerySet[_T]):
     def delete(self, *args: Any, **kwargs: Any) -> tuple[int, dict[str, int]]: ...
 
-class MP_NodeManager(models.Manager[MP_Node]):
-    def get_queryset(self) -> MP_NodeQuerySet: ...
+class MP_NodeManager(models.Manager[_T]):
+    def get_queryset(self) -> MP_NodeQuerySet[_T]: ...
 
 class MP_AddHandler:
     stmts: list[tuple[str, list[Any]]]

@@ -1,3 +1,9 @@
+## v4.8.4 (2026-03-21)
+
+### Fix
+
+- make MP_NodeManager generic
+
 ## v4.8.3 (2026-03-16)
 
 ### Fix
